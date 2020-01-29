@@ -16,7 +16,7 @@ http://localhost:9089/irf-test-web/api/v1.0.0/holdings/PSD2/accounts/10995/trans
 "BIC": "DEMOGBPX",
 "availableBalance": 13587855.1
 			
-Kannan
+Kannan branch1
 			
 			
 
