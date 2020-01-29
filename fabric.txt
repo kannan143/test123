@@ -1,0 +1,77 @@
+http://ljstg5s2.temenosgroup.com:8080/mfconsole
+
+http://localhost:9089/irf-test-web/api/v1.0.0/holdings/PSD2/accounts/{accountid}
+
+http://localhost:9089/irf-test-web/api/v1.0.0/holdings/PSD2/accounts/10995/transactions
+
+
+
+"accountStatus": "Active",
+"accountId": "10995",
+"productId": "Current Account",
+"ledgerBalance": 13599674.31,
+"displayName": "COCA-COLA",
+"accountIBAN": "GB61DEMO60161300010995",
+"currency": "USD",
+"BIC": "DEMOGBPX",
+"availableBalance": 13587855.1
+			
+			
+			
+
+var navigationobj = new kony.mvc.Navigation("frmProductList");
+navigationobj.navigate(cat_name1);
+
+
+onNavigate : function(ProductInformation){
+integrationObj = kony.sdk.getCurrentInstance().getIntegrationService("BestBuyService");
+ var headers ={};
+ var data ={
+      "id": ProductInformation.productId
+    };
+ 
+    integrationObj.invokeOperation("getProductDetails", headers, data, this.getproductdetailsSucCB, this.getproductdetatilsErrorCB);
+ 	
+  },
+  
+  
+  
+  getproductdetailsSucCB: function(productdetailsresponse) {
+    if (productdetailsresponse !== null) {
+      
+        this.view.lbldescriptions.text = output.longDescription;	
+        //this.view.reviewcount.text = "Number of Reviews: " + output.customerReviewCount;
+        this.view.imgratingstar.src = this.Ratingimage(output.customerReviewAverage);
+
+        kony.model.ApplicationContext.dismissLoadingScreen();
+        this.view.forceLayout(); 
+      }}
+    }
+
+    else {
+      kony.model.ApplicationContext.dismissLoadingScreen();
+      this.view.forceLayout();
+      // The call failed because opstatus was not 0 so we'll alert the user and show that opststus
+      kony.ui.Alert({
+        message: "Service call failed with opstatus " + productresponse.opstatus,
+        alertType: constants.ALERT_TYPE_ERROR,
+        alertTitle: "",
+        yesLabel: "OK"
+      }, {});
+      kony.model.ApplicationContext.dismissLoadingScreen();
+
+    }
+    this.view.forceLayout();
+  },
+  
+  
+  
+  
+    getproductdetatilsErrorCB: function(error) {
+    //alert("error");
+    kony.print(" ********** Entering into Serice callback ********** ");
+    kony.print(" ********** Failure in get ErrorCallback: " + JSON.stringify(error) + " ********** ");
+    kony.application.dismissLoadingScreen();
+    alert("Account Number Not Found"));
+    kony.print(" ********** Exiting out of get ErrorCallback ********** ");
+  },
